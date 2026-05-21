@@ -20,6 +20,8 @@ public class Food {
 
     private String brand;
 
+    @Column(name = "food_category")
+    @Enumerated(EnumType.STRING)
     private FoodCategory foodCategory;
 
     private Double calories;
