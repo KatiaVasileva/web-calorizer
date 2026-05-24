@@ -1,4 +1,4 @@
-package com.vasileva.calorizer.entity;
+package com.vasileva.calorizer.model.food;
 
 public enum FoodCategory {
     VEGETABLES("Овощи"),
@@ -17,6 +17,7 @@ public enum FoodCategory {
     BERRY("Ягоды"),
     GREENS("Зелень"),
     SWEETS("Сладости"),
+    SEAFOOD("Морепродукты"),
     SOUP("Суп");
 
     FoodCategory(String value) {
