@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorizer</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <!-- MAIN -->
+    <div class="main-layout">
+
+        <!-- LEFT SIDEBAR -->
+        <div th:replace="~{fragments/left-sidebar :: left-sidebar}"></div>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <div class="menu-button-box">
+
+                <a th:href="@{/foods}" class="menu-button">
+                    Определить КБЖУ блюда
+                </a>
+
+                <a th:href="@{/foods}" class="menu-button">
+                    Добавить продукт
+                </a>
+
+                <a th:href="@{/foods}" class="menu-button">
+                    Посмотреть список блюд
+                </a>
+
+<!--                <button class="menu-button">-->
+<!--                    Посмотреть список продуктов-->
+<!--                </button>-->
+
+                <a th:href="@{/foods}" class="menu-button">
+                    Посмотреть список продуктов
+                </a>
+
+                <a th:href="@{/foods}" class="menu-button diary-button">
+                    Дневник питания
+                </a>
+
+                <a th:href="@{/foods}" class="menu-button recipe-button">
+                    Рецепты
+                </a>
+
+            </div>
+
+            <img
+                    th:src="@{/images/spaghetti.png}"
+                    alt="спагетти"
+                    class="image"
+            />
+
+        </main>
+
+        <!-- RIGHT SIDEBAR -->
+        <div th:replace="~{fragments/right-sidebar :: right-sidebar}"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</div>
+
+</body>
+</html>

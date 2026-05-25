@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<aside class="sidebar-left" th:fragment="left-sidebar">
+
+    <div class="burger">
+        <span class="burgerLine"></span>
+        <span class="burgerLine"></span>
+        <span class="burgerLine"></span>
+    </div>
+
+    <div class="sidebar-container-box">
+
+        <div class="sidebar-content-box">
+
+            <a th:href="@{/}" class="sidebar-item">
+                Главная
+            </a>
+
+            <a th:href="@{/profile}" class="sidebar-item">
+                Мой профиль
+            </a>
+
+            <a th:href="@{/limit-calculator}" class="sidebar-item">
+                Калькулятор КБЖУ
+            </a>
+
+            <a th:href="@{/dish-value}" class="sidebar-item">
+                Определить КБЖУ блюда
+            </a>
+
+            <a th:href="@{/new-product}" class="sidebar-item">
+                Добавить продукт
+            </a>
+
+            <a th:href="@{/dish-list}" class="sidebar-item">
+                Список блюд
+            </a>
+
+            <a th:href="@{/food-list}" class="sidebar-item">
+                Список продуктов
+            </a>
+
+            <a th:href="@{/diary}" class="sidebar-item">
+                Дневник питания
+            </a>
+
+            <a th:href="@{/recipes}" class="sidebar-item">
+                Рецепты
+            </a>
+
+            <a th:href="@{/about}" class="sidebar-item">
+                О приложении
+            </a>
+
+            <a th:href="@{/logout}" class="sidebar-item">
+                Выйти
+            </a>
+
+        </div>
+
+    </div>
+
+</aside>
+
+</body>
+</html>

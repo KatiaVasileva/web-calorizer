@@ -1,24 +1,29 @@
 package com.vasileva.calorizer.controller;
 
+import com.vasileva.calorizer.model.food.Food;
 import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.service.FoodService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@RestController
+@Controller
 @RequestMapping("/foods")
 @AllArgsConstructor
 public class FoodController {
     private final FoodService foodService;
 
     @GetMapping
-    public Collection<FoodOut> getAll() {
-        return foodService.getAllFoods();
+    public String getAll(Model model) {
+        Collection<FoodOut> foods = foodService.getAllFoods();
+        model.addAttribute("foods", foods);
+        return "food-list";
     }
 
     @PostMapping
