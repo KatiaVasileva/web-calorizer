@@ -1,5 +1,7 @@
 package com.vasileva.calorizer.service;
 
+import com.vasileva.calorizer.exception.FoodExistsException;
+import com.vasileva.calorizer.exception.FoodNotFoundException;
 import com.vasileva.calorizer.mapper.FoodMapper;
 import com.vasileva.calorizer.model.food.Food;
 import com.vasileva.calorizer.model.food.FoodIn;
@@ -35,18 +37,18 @@ public class FoodService {
 
     public FoodOut getFoodById(Long id) {
         return foodRepository.findById(id).map(foodMapper::out)
-                .orElseThrow(() -> new IllegalArgumentException("Food not found"));
+                .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", id)));
     }
 
     public FoodOut updateFood(FoodIn input) {
         Food updatedFood = foodRepository.findById(input.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Food not found"));
+                .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", input.getId())));
         if (!updatedFood.getName().equals(input.getName())) {
 
             boolean exists = foodRepository.existsByName(input.getName());
 
             if (exists) {
-                throw new IllegalArgumentException("Food with this name already exists");
+                throw new FoodExistsException(String.format("Food with name=%s already exists", input.getName()));
             }
 
             updatedFood.setName(input.getName());

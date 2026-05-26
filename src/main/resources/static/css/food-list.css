@@ -87,3 +87,7 @@
 .link:hover {
     color: #008000;
 }
+
+.table-header {
+    font-weight: 800;
+}

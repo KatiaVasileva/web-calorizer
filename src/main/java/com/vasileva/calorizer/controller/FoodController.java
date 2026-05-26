@@ -12,18 +12,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/foods")
 @AllArgsConstructor
 public class FoodController {
     private final FoodService foodService;
 
+//    @GetMapping
+//    public String getAll(Model model) {
+//        Collection<FoodOut> foods = foodService.getAllFoods();
+//        model.addAttribute("foods", foods);
+//        return "food-list";
+//    }
+
     @GetMapping
-    public String getAll(Model model) {
-        Collection<FoodOut> foods = foodService.getAllFoods();
-        model.addAttribute("foods", foods);
-        return "food-list";
+    public List<FoodOut> getAll() {
+        return foodService.getAllFoods();
     }
 
     @PostMapping
@@ -45,7 +51,7 @@ public class FoodController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteWriterById(@PathVariable Long id) {
+    public void deleteFoodById(@PathVariable Long id) {
          foodService.deleteFoodById(id);
     }
 }
