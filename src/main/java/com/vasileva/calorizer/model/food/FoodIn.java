@@ -1,13 +1,9 @@
 package com.vasileva.calorizer.model.food;
 
-import com.vasileva.calorizer.model.user.User;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDateTime;
 
 @Data
 @Builder
