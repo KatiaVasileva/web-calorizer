@@ -22,7 +22,7 @@ public class FoodOut {
 
     Double calories;
 
-    Double protein;
+    Double proteins;
 
     Double fats;
 

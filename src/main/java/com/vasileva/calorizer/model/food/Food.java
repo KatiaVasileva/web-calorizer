@@ -32,7 +32,7 @@ public class Food {
 
     Double calories;
 
-    Double protein;
+    Double proteins;
 
     Double fats;
 

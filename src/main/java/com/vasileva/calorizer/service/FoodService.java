@@ -40,9 +40,9 @@ public class FoodService {
                 .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", id)));
     }
 
-    public FoodOut updateFood(FoodIn input) {
-        Food updatedFood = foodRepository.findById(input.getId())
-                .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", input.getId())));
+    public FoodOut updateFood(FoodIn input, Long id) {
+        Food updatedFood = foodRepository.findById(id)
+                .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", id)));
         if (!updatedFood.getName().equals(input.getName())) {
 
             boolean exists = foodRepository.existsByName(input.getName());
@@ -58,7 +58,7 @@ public class FoodService {
         updatedFood.setCalories(input.getCalories());
         updatedFood.setFats(input.getFats());
         updatedFood.setCarbohydrates(input.getCarbohydrates());
-        updatedFood.setProtein(input.getProtein());
+        updatedFood.setProteins(input.getProteins());
         updatedFood.setUpdated(LocalDateTime.now());
         return foodMapper.out(foodRepository.save(updatedFood));
     }

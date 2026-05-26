@@ -29,8 +29,8 @@ public class FoodController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FoodOut updateFood(@RequestBody @Valid FoodIn input, @PathVariable int id) {
-        return foodService.updateFood(input);
+    public FoodOut updateFood(@RequestBody @Valid FoodIn input, @PathVariable Long id) {
+        return foodService.updateFood(input, id);
     }
 
     @GetMapping("/{id}")

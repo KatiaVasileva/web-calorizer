@@ -34,7 +34,7 @@ public class FoodIn {
 
     @Min(value = 0, message = "Значение не может быть меньше 0")
     @Max(value = 100, message = "Значение не может быть больше 100")
-    Double protein;
+    Double proteins;
 
     @Min(value = 0, message = "Значение не может быть меньше 0")
     @Max(value = 100, message = "Значение не может быть больше 100")
