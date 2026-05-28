@@ -2,6 +2,7 @@ package com.vasileva.calorizer.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vasileva.calorizer.model.food.Food;
 import com.vasileva.calorizer.model.food.FoodCategory;
 import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
@@ -17,6 +18,17 @@ public class TestDataFactory {
     private static final double PROTEINS = 10d;
     private static final double CARBOHYDRATES = 10d;
     private static final double FATS = 10d;
+
+    private static Food.FoodBuilder baseFoodBuilder() {
+        return Food.builder()
+                .name(NAME)
+                .brand(BRAND)
+                .foodCategory(CATEGORY)
+                .calories(CALORIES)
+                .proteins(PROTEINS)
+                .carbohydrates(CARBOHYDRATES)
+                .fats(FATS);
+    }
 
     private static FoodOut.FoodOutBuilder baseFoodOutBuilder() {
         return FoodOut.builder()
@@ -40,8 +52,21 @@ public class TestDataFactory {
                 .fats(FATS);
     }
 
+    public static Food createFood() {
+        return baseFoodBuilder()
+                .id(1L)
+                .build();
+    }
+
     public static FoodIn createFoodIn() {
         return baseFoodInBuilder().build();
+    }
+
+    public static FoodIn createUpdatedFood() {
+        return baseFoodInBuilder()
+                .name("updatedName")
+                .brand("updatedBrand")
+                .build();
     }
 
     public static FoodOut createFoodOut() {
@@ -49,6 +74,7 @@ public class TestDataFactory {
                 .id(1L)
                 .build();
     }
+
 
     public static List<FoodOut> createFoodOutList() {
         return List.of(
