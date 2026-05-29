@@ -64,7 +64,10 @@ public class FoodServiceTest {
     public void shouldThrowExceptionWhenFoodNotFound() {
         when(foodRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(FoodNotFoundException.class, () -> foodService.updateFood(updatedFoodIn, 999L));
+        Exception exception = assertThrows(FoodNotFoundException.class,
+                () -> foodService.updateFood(updatedFoodIn, 999L));
+
+        assertEquals("Food with id=999 not found", exception.getMessage());
 
         verify(foodRepository, times(1)).findById(999L);
         verify(foodRepository, never()).existsByName(anyString());
@@ -78,15 +81,15 @@ public class FoodServiceTest {
         when(foodRepository.findById(1L)).thenReturn(Optional.of(food));
         when(foodRepository.existsByName("updatedName")).thenReturn(true);
 
-        assertThrows(FoodExistsException.class,
+        Exception exception = assertThrows(FoodExistsException.class,
                 () -> foodService.updateFood(updatedFoodIn, 1L),
                 "Expected FoodExistsException when trying to update food with existing name");
+
+        assertEquals("Food with name=updatedName already exists", exception.getMessage());
 
         verify(foodRepository, times(1)).findById(1L);
         verify(foodRepository, times(1)).existsByName("updatedName");
         verify(foodRepository, never()).save(any(Food.class));
         verify(foodMapper, never()).out(any(Food.class));
     }
-
-
 }
