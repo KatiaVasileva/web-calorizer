@@ -1,11 +1,14 @@
 package com.vasileva.calorizer.service;
 
+import com.vasileva.calorizer.exception.FoodExistsException;
+import com.vasileva.calorizer.exception.FoodNotFoundException;
 import com.vasileva.calorizer.mapper.FoodMapper;
 import com.vasileva.calorizer.model.food.Food;
 import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.repository.FoodRepository;
 import com.vasileva.calorizer.util.TestDataFactory;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +37,7 @@ public class FoodServiceTest {
     private final Food food = TestDataFactory.createFood();
 
     @Test
+    @DisplayName("test correct updateFood()")
     public void shouldReturnUpdatedFood() {
         Food updatedFood = TestDataFactory.createFood();
         updatedFood.setBrand("updatedBrand");
@@ -53,4 +58,35 @@ public class FoodServiceTest {
         verify(foodRepository, times(1)).save(food);
         verify(foodMapper, times(1)).out(updatedFood);
     }
+
+    @Test
+    @DisplayName("test throw FoodNotFoundException when food not found")
+    public void shouldThrowExceptionWhenFoodNotFound() {
+        when(foodRepository.findById(999L)).thenReturn(Optional.empty());
+
+        assertThrows(FoodNotFoundException.class, () -> foodService.updateFood(updatedFoodIn, 999L));
+
+        verify(foodRepository, times(1)).findById(999L);
+        verify(foodRepository, never()).existsByName(anyString());
+        verify(foodRepository, never()).save(any(Food.class));
+        verify(foodMapper, never()).out(any(Food.class));
+    }
+
+    @Test
+    @DisplayName("test throw FoodExistsException when food name already exists")
+    public void shouldThrowExceptionWhenFoodFoundButNameExists() {
+        when(foodRepository.findById(1L)).thenReturn(Optional.of(food));
+        when(foodRepository.existsByName("updatedName")).thenReturn(true);
+
+        assertThrows(FoodExistsException.class,
+                () -> foodService.updateFood(updatedFoodIn, 1L),
+                "Expected FoodExistsException when trying to update food with existing name");
+
+        verify(foodRepository, times(1)).findById(1L);
+        verify(foodRepository, times(1)).existsByName("updatedName");
+        verify(foodRepository, never()).save(any(Food.class));
+        verify(foodMapper, never()).out(any(Food.class));
+    }
+
+
 }

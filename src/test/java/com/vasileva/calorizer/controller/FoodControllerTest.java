@@ -4,6 +4,7 @@ import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.service.FoodService;
 import com.vasileva.calorizer.util.TestDataFactory;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,6 +30,7 @@ public class FoodControllerTest {
     private FoodService foodService;
 
     @Test
+    @DisplayName("test return list of all foods")
     public void shouldReturnListOfFoods() throws Exception {
         List<FoodOut> foods = TestDataFactory.createFoodOutList();
 
@@ -42,6 +44,7 @@ public class FoodControllerTest {
     }
 
     @Test
+    @DisplayName("test create a new food")
     public void shouldCreateNewFood() throws Exception {
         FoodIn foodIn = TestDataFactory.createFoodIn();
         FoodOut foodOut = TestDataFactory.createFoodOut();
