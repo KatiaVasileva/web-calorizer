@@ -8,6 +8,7 @@ import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,14 @@ public class FoodService {
                 .stream()
                 .map(foodMapper::out)
                 .collect(Collectors.toList());
+    }
+
+    public List<FoodOut> getAllSortedByField(String field) {
+        Sort sort = Sort.by(Sort.Direction.ASC, field);
+        return foodRepository.findAll(sort)
+                .stream()
+                .map(foodMapper::out)
+                .toList();
     }
 
     public FoodOut getFoodById(Long id) {
@@ -66,4 +75,6 @@ public class FoodService {
     public void deleteFoodById(Long id) {
         foodRepository.deleteById(id);
     }
+
+
 }

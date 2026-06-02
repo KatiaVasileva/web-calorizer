@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/foods")
+@RequestMapping("/api/v1/foods")
 @AllArgsConstructor
 public class FoodController {
     private final FoodService foodService;
@@ -19,6 +19,11 @@ public class FoodController {
     @GetMapping
     public List<FoodOut> getAll() {
         return foodService.getAllFoods();
+    }
+
+    @GetMapping("/sort")
+    public List<FoodOut> getAllSortedByField(@RequestParam String field) {
+        return foodService.getAllSortedByField(field);
     }
 
     @PostMapping
