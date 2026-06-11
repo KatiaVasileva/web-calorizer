@@ -12,3 +12,4 @@ CREATE TABLE food
     created timestamp without time zone,
     updated timestamp without time zone
 );
+

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class TestDataFactory {
 
+    public static final Long ID = 1L;
+    public static final Long NON_EXISTING_ID = 999L;
     private static final String NAME = "testFood";
     private static final String BRAND = "testBrand";
     private static final FoodCategory CATEGORY = FoodCategory.DRINKS;
@@ -54,7 +56,6 @@ public class TestDataFactory {
 
     public static Food createFood() {
         return baseFoodBuilder()
-//                .id(1L)
                 .build();
     }
 
@@ -75,6 +76,19 @@ public class TestDataFactory {
                 .build();
     }
 
+    public static List<Food> createFoodList() {
+        Food food1 = createFood();
+        Food food2 = baseFoodBuilder()
+                .name("testFood2")
+                .brand("testBrand2")
+                .calories(200d)
+                .proteins(20d)
+                .carbohydrates(20d)
+                .fats(20d)
+                .build();
+        food2.setName("testFood2");
+        return List.of(food1, food2);
+    }
 
     public static List<FoodOut> createFoodOutList() {
         return List.of(
