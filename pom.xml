@@ -82,6 +82,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -106,6 +111,7 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -182,6 +188,21 @@
                 </executions>
                 <configuration>
                     <argLine>-XX:+EnableDynamicAgentLoading</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+
+                <configuration>
+                    <url>jdbc:postgresql://localhost:54320/calorizer</url>
+                    <username>postgres</username>
+                    <password>postgres</password>
+                    <driver>org.postgresql.Driver</driver>
+
+                    <changeLogFile>
+                        src/main/resources/db/changelog/db.changelog-master.xml
+                    </changeLogFile>
                 </configuration>
             </plugin>
         </plugins>
