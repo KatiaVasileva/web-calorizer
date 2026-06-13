@@ -2,9 +2,13 @@ package com.vasileva.calorizer.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
+@TestPropertySource(properties = {
+        "spring.jpa.hibernate.ddl-auto=create"
+})
 public abstract class PostgresContainerTest {
 
     @Container

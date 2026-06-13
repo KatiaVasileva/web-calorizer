@@ -36,7 +36,7 @@ public class FoodControllerTest {
 
         when(foodService.getAllFoods()).thenReturn(foods);
 
-        mockMvc.perform(get("/foods"))
+        mockMvc.perform(get("/api/v1/foods"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(foods.size()))
                 .andExpect(jsonPath("$[0].name").value(foods.get(0).getName()))
@@ -51,7 +51,7 @@ public class FoodControllerTest {
 
         when(foodService.addFood(foodIn)).thenReturn(foodOut);
 
-        mockMvc.perform(post("/foods")
+        mockMvc.perform(post("/api/v1/foods")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TestDataFactory.createFoodJson()))
                 .andExpect(status().isCreated())
