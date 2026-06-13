@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class FoodControllerIntegrationTest {
+public class FoodControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
