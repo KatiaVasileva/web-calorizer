@@ -1,6 +1,6 @@
 package com.vasileva.calorizer.service;
 
-import com.vasileva.calorizer.config.PostgresContainerTest;
+import com.vasileva.calorizer.annotation.IntegrationTest;
 import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.util.TestDataFactory;
@@ -8,23 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestConstructor;
-import org.springframework.test.context.TestPropertySource;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@IntegrationTest
 @RequiredArgsConstructor
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@Testcontainers
-@TestPropertySource(properties = {
-        "spring.jpa.hibernate.ddl-auto=create"
-})
-public class FoodServiceIT extends PostgresContainerTest {
+public class FoodServiceIT {
     private final FoodService foodService;
 
     private FoodOut foodOut;

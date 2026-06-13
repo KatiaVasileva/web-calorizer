@@ -32,4 +32,6 @@ public class FoodOut {
 
     LocalDateTime updated;
 
+    Long userId;
+
 }
