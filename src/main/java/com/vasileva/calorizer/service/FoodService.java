@@ -10,6 +10,7 @@ import com.vasileva.calorizer.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,13 +18,18 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class FoodService {
 
     public final FoodRepository foodRepository;
     public final FoodMapper foodMapper;
 
+    @Transactional
     public FoodOut addFood(FoodIn input) {
         Food food = foodMapper.in(input);
+        if (food.getBrand() == null || food.getBrand().isBlank()) {
+            food.setBrand("–");
+        }
         food.setCreated(LocalDateTime.now());
         return foodMapper.out(foodRepository.save(food));
     }
@@ -49,6 +55,7 @@ public class FoodService {
                 .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", id)));
     }
 
+    @Transactional
     public FoodOut updateFood(FoodIn input, Long id) {
         Food updatedFood = foodRepository.findById(id)
                 .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", id)));
@@ -72,6 +79,7 @@ public class FoodService {
         return foodMapper.out(foodRepository.save(updatedFood));
     }
 
+    @Transactional
     public void deleteFoodById(Long id) {
         foodRepository.deleteById(id);
     }

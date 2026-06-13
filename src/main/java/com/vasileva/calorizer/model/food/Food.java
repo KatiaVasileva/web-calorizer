@@ -24,7 +24,8 @@ public class Food {
     @Column(unique = true, nullable = false)
     String name;
 
-    String brand;
+    @Builder.Default
+    String brand = "–";
 
     @Column(name = "food_category")
     @Enumerated(EnumType.STRING)
