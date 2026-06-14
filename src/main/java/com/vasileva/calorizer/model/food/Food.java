@@ -4,6 +4,7 @@ import com.vasileva.calorizer.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -39,9 +40,12 @@ public class Food {
 
     Double carbohydrates;
 
-    LocalDateTime created;
+    @CreationTimestamp
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
 
-    LocalDateTime updated;
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id")

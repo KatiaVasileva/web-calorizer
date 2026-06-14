@@ -46,5 +46,5 @@ public class User {
     @ToString.Exclude
     List<Food> foods;
 
-    LocalDateTime created;
+    LocalDateTime createdAt;
 }

@@ -28,9 +28,9 @@ public class FoodOut {
 
     Double carbohydrates;
 
-    LocalDateTime created;
+    LocalDateTime createdAt;
 
-    LocalDateTime updated;
+    LocalDateTime updatedAt;
 
     Long userId;
 

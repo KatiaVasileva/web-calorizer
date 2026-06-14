@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +25,7 @@ public class FoodService {
 
     @Transactional
     public FoodOut addFood(FoodIn input) {
-        Food food = foodMapper.in(input);
-        if (food.getBrand() == null || food.getBrand().isBlank()) {
-            food.setBrand("–");
-        }
-        food.setCreated(LocalDateTime.now());
-        return foodMapper.out(foodRepository.save(food));
+        return foodMapper.out(foodRepository.save(foodMapper.in(input)));
     }
 
     public List<FoodOut> getAllFoods() {
@@ -66,16 +60,9 @@ public class FoodService {
             if (exists) {
                 throw new FoodExistsException(String.format("Food with name=%s already exists", input.getName()));
             }
-
-            updatedFood.setName(input.getName());
         }
-        updatedFood.setBrand(input.getBrand());
-        updatedFood.setFoodCategory(input.getFoodCategory());
-        updatedFood.setCalories(input.getCalories());
-        updatedFood.setFats(input.getFats());
-        updatedFood.setCarbohydrates(input.getCarbohydrates());
-        updatedFood.setProteins(input.getProteins());
-        updatedFood.setUpdated(LocalDateTime.now());
+
+        foodMapper.update(input, updatedFood);
         return foodMapper.out(foodRepository.save(updatedFood));
     }
 
@@ -83,6 +70,4 @@ public class FoodService {
     public void deleteFoodById(Long id) {
         foodRepository.deleteById(id);
     }
-
-
 }

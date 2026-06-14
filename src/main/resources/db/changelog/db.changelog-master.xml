@@ -17,11 +17,11 @@
             <column name="carbohydrates" type="DOUBLE precision"/>
             <column name="fats" type="DOUBLE precision"/>
             <column name="proteins" type="DOUBLE precision"/>
-            <column name="created" type="timestamp"/>
+            <column name="created_at" type="timestamp"/>
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="food_pkey"/>
             </column>
-            <column name="updated" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
             <column name="user_id" type="BIGINT"/>
             <column name="brand" type="VARCHAR(255)"/>
             <column name="food_category" type="VARCHAR(255)"/>
@@ -41,7 +41,7 @@
             <column name="weight" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="created" type="timestamp"/>
+            <column name="created_at" type="timestamp"/>
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
             </column>

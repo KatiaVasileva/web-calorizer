@@ -56,7 +56,7 @@ public class FoodServiceTest {
         assertEquals(foodOut.getId(), result.getId());
         assertEquals(foodOut.getName(), result.getName());
         verify(foodRepository).save(food);
-        assertNotNull(food.getCreated());
+        assertNotNull(food.getCreatedAt());
     }
 
     @Test
@@ -126,7 +126,7 @@ public class FoodServiceTest {
         FoodOut result = foodService.updateFood(foodIn, ID);
 
         assertNotNull(result);
-        assertNotNull(food.getUpdated());
+        assertNotNull(food.getUpdatedAt());
         verify(foodRepository, never()).existsByName(anyString());
     }
 
@@ -143,7 +143,7 @@ public class FoodServiceTest {
 
         assertNotNull(result);
         assertEquals("updatedName", food.getName());
-        assertNotNull(food.getUpdated());
+        assertNotNull(food.getUpdatedAt());
     }
 
     @Test
