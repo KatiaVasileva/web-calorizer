@@ -7,6 +7,7 @@ import com.vasileva.calorizer.model.food.Food;
 import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.repository.FoodRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,16 @@ public class FoodService {
 
     public final FoodRepository foodRepository;
     public final FoodMapper foodMapper;
+    private final MeterRegistry meterRegistry;
 
     @Transactional
     public FoodOut addFood(FoodIn input) {
-        return foodMapper.out(foodRepository.save(foodMapper.in(input)));
+        Food entity = foodRepository.save(foodMapper.in(input));
+        meterRegistry.counter("list.food.added",
+                "category", input.getFoodCategory().name(), // Разделит метрику по категориям
+                "status", "success"
+        ).increment();
+        return foodMapper.out(entity);
     }
 
     public List<FoodOut> getAllFoods() {
