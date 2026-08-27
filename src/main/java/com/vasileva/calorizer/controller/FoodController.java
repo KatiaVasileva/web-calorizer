@@ -5,6 +5,8 @@ import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.service.FoodService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +18,13 @@ import java.util.List;
 public class FoodController {
     private final FoodService foodService;
 
+    private static final Logger logger = LoggerFactory.getLogger(FoodController.class);
+
     @GetMapping
     public List<FoodOut> getAll() {
+        logger.info("Get all foods");
+        logger.debug("DEBUG: Additional debug information");
+        logger.error("ERROR: Simulated error log (just an example)");
         return foodService.getAllFoods();
     }
 
