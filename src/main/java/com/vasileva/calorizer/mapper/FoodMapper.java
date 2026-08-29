@@ -17,11 +17,13 @@ public interface FoodMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "brand", defaultValue = "–")
+    @Mapping(target = "isFavorite", defaultValue = "false")
     @Mapping(target = "user", ignore = true)
     Food in(FoodIn foodIn);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "brand", defaultValue = "–")
+    @Mapping(target = "isFavorite", defaultValue = "false")
     @Mapping(target = "updatedAt",
             expression = "java(java.time.LocalDateTime.now())"
     )

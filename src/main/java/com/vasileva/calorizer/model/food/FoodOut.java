@@ -28,6 +28,8 @@ public class FoodOut {
 
     Double carbohydrates;
 
+    Boolean isFavorite;
+
     LocalDateTime createdAt;
 
     LocalDateTime updatedAt;

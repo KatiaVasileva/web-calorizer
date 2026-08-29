@@ -40,6 +40,10 @@ public class Food {
 
     Double carbohydrates;
 
+    @Column(name = "is_favorite", nullable = false)
+    @Builder.Default
+    Boolean isFavorite = false;
+
     @CreationTimestamp
     @Column(name = "created_at")
     LocalDateTime createdAt;

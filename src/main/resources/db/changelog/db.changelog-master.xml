@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.31.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
@@ -57,5 +57,7 @@
                                  constraintName="fkonuv85jhrw21c6y3c9cg0ep6o" onDelete="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
+
+    <include file="db/changelog/db.changelog.add-is-favorite.xml"/>
 
 </databaseChangeLog>
