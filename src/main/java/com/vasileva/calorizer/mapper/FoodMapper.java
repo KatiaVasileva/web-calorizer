@@ -23,7 +23,7 @@ public interface FoodMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "brand", defaultValue = "–")
-    @Mapping(target = "isFavorite", defaultValue = "false")
+    @Mapping(target = "isFavorite", ignore = true)
     @Mapping(target = "updatedAt",
             expression = "java(java.time.LocalDateTime.now())"
     )

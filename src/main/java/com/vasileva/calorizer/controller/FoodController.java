@@ -45,6 +45,11 @@ public class FoodController {
         return foodService.updateFood(input, id);
     }
 
+    @PatchMapping("/{id}/favorite")
+    public FoodOut toggleFavorite(@PathVariable Long id) {
+        return foodService.toggleFavorite(id);
+    }
+
     @GetMapping("/{id}")
     public FoodOut getFoodById(@PathVariable Long id) {
         return foodService.getFoodById(id);

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,7 +75,20 @@ public class FoodService {
     }
 
     @Transactional
+    public FoodOut toggleFavorite(Long id) {
+        Food food = foodRepository.findById(id)
+                .orElseThrow(() -> new FoodNotFoundException(String.format("Food with id=%d not found", id)));
+
+        food.setIsFavorite(!food.getIsFavorite());
+        food.setUpdatedAt(LocalDateTime.now());
+
+        return foodMapper.out(foodRepository.save(food));
+    }
+
+    @Transactional
     public void deleteFoodById(Long id) {
         foodRepository.deleteById(id);
     }
+
+
 }
