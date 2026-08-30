@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +38,8 @@ public class FoodController {
 
     @GetMapping("/sort-with-page")
     public Page<FoodOut> getAllSortedByFieldWithPagination(@RequestParam(defaultValue = "name") String field,
-                                                           @RequestParam(defaultValue = "0") int page,
-                                                           @RequestParam(defaultValue = "10") int size) {
-        return foodService.getAllSortedByFieldWithPagination(field, page, size);
+                                                           @PageableDefault Pageable pageable) {
+        return foodService.getAllSortedByFieldWithPagination(field, pageable);
     }
 
     @PostMapping

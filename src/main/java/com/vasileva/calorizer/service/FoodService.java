@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +30,18 @@ public class FoodService {
     public final FoodRepository foodRepository;
     public final FoodMapper foodMapper;
     private final MeterRegistry meterRegistry;
+
+    private static final Set<String> ALLOWED_SORT_FIELDS = Set.of(
+            "name",
+            "brand",
+            "foodCategory",
+            "calories",
+            "proteins",
+            "fats",
+            "carbohydrates",
+            "createdAt",
+            "isFavorite"
+    );
 
     @Transactional
     public FoodOut addFood(FoodIn input) {
@@ -61,16 +74,24 @@ public class FoodService {
                 .toList();
     }
 
-    public Page<FoodOut> getAllSortedByFieldWithPagination(String field, int page, int size) {
-        Sort.Direction direction;
-        if (Objects.equals(field, "isFavorite") || Objects.equals(field, "createdAt")) {
-            direction = Sort.Direction.DESC;
-        } else {
-            direction = Sort.Direction.ASC;
+    public Page<FoodOut> getAllSortedByFieldWithPagination(String field, Pageable pageable) {
+        if(!ALLOWED_SORT_FIELDS.contains(field)) {
+            throw new IllegalArgumentException(
+                    "Недопустимое поле для сортировки: " + field
+            );
         }
-        Sort sort = Sort.by(direction, field);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        return foodRepository.findAll(pageable)
+
+        Sort.Direction direction = Objects.equals(field, "isFavorite")
+                || Objects.equals(field, "createdAt")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(direction, field));
+
+        return foodRepository.findAll(sortedPageable)
                 .map(foodMapper::out);
     }
 
