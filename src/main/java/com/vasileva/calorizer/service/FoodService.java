@@ -9,12 +9,16 @@ import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.repository.FoodRepository;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,11 +49,29 @@ public class FoodService {
     }
 
     public List<FoodOut> getAllSortedByField(String field) {
-        Sort sort = Sort.by(Sort.Direction.ASC, field);
+        Sort sort;
+        if (Objects.equals(field, "isFavorite") || Objects.equals(field, "createdAt")) {
+            sort = Sort.by(Sort.Direction.DESC, field);
+        } else {
+            sort = Sort.by(Sort.Direction.ASC, field);
+        }
         return foodRepository.findAll(sort)
                 .stream()
                 .map(foodMapper::out)
                 .toList();
+    }
+
+    public Page<FoodOut> getAllSortedByFieldWithPagination(String field, int page, int size) {
+        Sort.Direction direction;
+        if (Objects.equals(field, "isFavorite") || Objects.equals(field, "createdAt")) {
+            direction = Sort.Direction.DESC;
+        } else {
+            direction = Sort.Direction.ASC;
+        }
+        Sort sort = Sort.by(direction, field);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return foodRepository.findAll(pageable)
+                .map(foodMapper::out);
     }
 
     public FoodOut getFoodById(Long id) {

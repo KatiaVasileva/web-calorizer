@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,13 @@ public class FoodController {
     @GetMapping("/sort")
     public List<FoodOut> getAllSortedByField(@RequestParam String field) {
         return foodService.getAllSortedByField(field);
+    }
+
+    @GetMapping("/sort-with-page")
+    public Page<FoodOut> getAllSortedByFieldWithPagination(@RequestParam(defaultValue = "name") String field,
+                                                           @RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "10") int size) {
+        return foodService.getAllSortedByFieldWithPagination(field, page, size);
     }
 
     @PostMapping
