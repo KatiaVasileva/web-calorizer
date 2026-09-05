@@ -74,6 +74,7 @@ public class FoodService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public Page<FoodOut> getAllSortedByFieldWithPagination(String field, Pageable pageable) {
         if(!ALLOWED_SORT_FIELDS.contains(field)) {
             throw new IllegalArgumentException(
@@ -93,6 +94,38 @@ public class FoodService {
 
         return foodRepository.findAll(sortedPageable)
                 .map(foodMapper::out);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<FoodOut> getAllSortedByFieldWithPaginationAndSearch(String search, String field, Pageable pageable) {
+        if(!ALLOWED_SORT_FIELDS.contains(field)) {
+            throw new IllegalArgumentException(
+                    "Недопустимое поле для сортировки: " + field
+            );
+        }
+
+        Sort.Direction direction = Objects.equals(field, "isFavorite")
+                || Objects.equals(field, "createdAt")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(direction, field));
+
+        Page<Food> foods;
+
+        if (search == null || search.isBlank()) {
+            foods = foodRepository.findAll(sortedPageable);
+        } else {
+            foods = foodRepository.findByNameContainingIgnoreCase(
+                    search.trim(),
+                    sortedPageable
+            );
+        }
+
+        return foods.map(foodMapper::out);
     }
 
     public FoodOut getFoodById(Long id) {
@@ -132,6 +165,5 @@ public class FoodService {
     public void deleteFoodById(Long id) {
         foodRepository.deleteById(id);
     }
-
 
 }

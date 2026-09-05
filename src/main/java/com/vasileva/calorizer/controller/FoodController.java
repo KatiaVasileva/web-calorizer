@@ -5,8 +5,6 @@ import com.vasileva.calorizer.model.food.FoodOut;
 import com.vasileva.calorizer.service.FoodService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,15 +19,15 @@ import java.util.List;
 public class FoodController {
     private final FoodService foodService;
 
-    private static final Logger logger = LoggerFactory.getLogger(FoodController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(FoodController.class);
 
-    @GetMapping
-    public List<FoodOut> getAll() {
-        logger.info("Get all foods");
-        logger.debug("DEBUG: Additional debug information");
-        logger.error("ERROR: Simulated error log (just an example)");
-        return foodService.getAllFoods();
-    }
+//    @GetMapping
+//    public List<FoodOut> getAll() {
+//        logger.info("Get all foods");
+//        logger.debug("DEBUG: Additional debug information");
+//        logger.error("ERROR: Simulated error log (just an example)");
+//        return foodService.getAllFoods();
+//    }
 
     @GetMapping("/sort")
     public List<FoodOut> getAllSortedByField(@RequestParam String field) {
@@ -40,6 +38,13 @@ public class FoodController {
     public Page<FoodOut> getAllSortedByFieldWithPagination(@RequestParam(defaultValue = "name") String field,
                                                            @PageableDefault Pageable pageable) {
         return foodService.getAllSortedByFieldWithPagination(field, pageable);
+    }
+
+    @GetMapping
+    public Page<FoodOut> getAllBySearch(@RequestParam(defaultValue = "") String search,
+                                        @RequestParam(defaultValue = "name") String field,
+                                        @PageableDefault Pageable pageable) {
+        return foodService.getAllSortedByFieldWithPaginationAndSearch(search, field, pageable);
     }
 
     @PostMapping
