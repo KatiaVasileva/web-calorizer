@@ -1,11 +1,15 @@
 package com.vasileva.calorizer.model.user;
 
+import com.vasileva.calorizer.model.food.Food;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,33 +17,41 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "users")
-public class User {
+@Table(name = "user_profile")
+public class UserProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String name;
-
-    String email;
-
-    String password;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    Role role;
+    Gender gender;
 
-    @OneToOne(mappedBy = "user")
+    BigDecimal weight;
+
+    Integer height;
+
+    Integer age;
+
+    @Column(name = "activity_factor")
+    @Enumerated(EnumType.STRING)
+    ActivityFactor activityFactor;
+
+    @OneToMany(mappedBy = "userProfile", fetch = FetchType.LAZY)
     @ToString.Exclude
-    UserProfile userProfile;
+    List<Food> foods;
 
     @CreationTimestamp
     @Column(name = "created_at")
     LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
+
 }

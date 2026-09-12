@@ -10,7 +10,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface FoodMapper {
 
-    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "userProfileId", source = "userProfile.id")
     FoodOut out(Food food);
 
     @Mapping(target = "id", ignore = true)
@@ -18,7 +18,7 @@ public interface FoodMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "brand", defaultValue = "–")
     @Mapping(target = "isFavorite", defaultValue = "false")
-    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "userProfile", ignore = true)
     Food in(FoodIn foodIn);
 
     @Mapping(target = "id", ignore = true)

@@ -12,52 +12,81 @@
         <createSequence incrementBy="1" sequenceName="users_id_seq" startValue="1"/>
     </changeSet>
     <changeSet id="1781353950602-3" author="katiavasileva">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1781353950602-4" author="katiavasileva">
+        <createTable tableName="user_profile">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"
+                             unique="true"
+                             foreignKeyName="fk_user_profile_user"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                             deleteCascade="true"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(20)"/>
+            <column name="height" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="DECIMAL(5,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activity_factor" type="VARCHAR(30)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1781353950602-5" author="katiavasileva">
         <createTable tableName="food">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="food_pkey"/>
+            </column>
+            <column name="user_profile_id" type="BIGINT">
+                <constraints foreignKeyName="fk_food_user_profile"
+                             referencedTableName="user_profile"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="brand" type="VARCHAR(255)"/>
+            <column name="food_category" type="VARCHAR(255)"/>
             <column name="calories" type="DOUBLE precision"/>
             <column name="carbohydrates" type="DOUBLE precision"/>
             <column name="fats" type="DOUBLE precision"/>
             <column name="proteins" type="DOUBLE precision"/>
-            <column name="created_at" type="timestamp"/>
-            <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="food_pkey"/>
+            <column name="is_favorite"
+                    type="BOOLEAN"
+                    defaultValueBoolean="false">
+                <constraints nullable="false"/>
             </column>
+            <column name="created_at" type="timestamp"/>
             <column name="updated_at" type="timestamp"/>
-            <column name="user_id" type="BIGINT"/>
-            <column name="brand" type="VARCHAR(255)"/>
-            <column name="food_category" type="VARCHAR(255)"/>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
     </changeSet>
-    <changeSet id="1781353950602-4" author="katiavasileva">
-        <createTable tableName="users">
-            <column name="age" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="height" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="weight" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_at" type="timestamp"/>
-            <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
-            </column>
-            <column name="activity_factor" type="VARCHAR(255)"/>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="gender" type="VARCHAR(255)"/>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="password" type="VARCHAR(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet id="1781353950602-5" author="katiavasileva">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="food"
-                                 constraintName="fkonuv85jhrw21c6y3c9cg0ep6o" onDelete="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
+<!--    <changeSet id="1781353950602-6" author="katiavasileva">-->
+<!--        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="food"-->
+<!--                                 constraintName="fkonuv85jhrw21c6y3c9cg0ep6o" onDelete="NO ACTION"-->
+<!--                                 referencedColumnNames="id" referencedTableName="users"/>-->
+<!--    </changeSet>-->
 
-    <include file="db/changelog/db.changelog.add-is-favorite.xml"/>
 
 </databaseChangeLog>

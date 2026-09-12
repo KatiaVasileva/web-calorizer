@@ -1,6 +1,6 @@
 package com.vasileva.calorizer.model.food;
 
-import com.vasileva.calorizer.model.user.User;
+import com.vasileva.calorizer.model.user.UserProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -52,7 +52,7 @@ public class Food {
     LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(name = "user_profile_id", nullable = false)
     @ToString.Exclude
-    User user;
+    UserProfile userProfile;
 }
