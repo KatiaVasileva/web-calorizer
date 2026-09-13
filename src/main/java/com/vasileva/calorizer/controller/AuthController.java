@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
-        log.info("REST request to register a new user: login [{}], email [{}]",
+        log.info("REST request to register a new user: name [{}], email [{}]",
                 request.getName(), request.getEmail());
         String message = authService.register(request);
 
