@@ -27,7 +27,6 @@ import java.util.List;
 public class AuthService {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
-//    private final UserStatsRepository userStatsRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
@@ -77,17 +76,7 @@ public class AuthService {
 
         log.debug("User [{}] successfully saved in database", request.getName());
 
-        // TODO UserProfile
-//        UserStats stats = UserStats.builder()
-//                .user(user)
-//                .total(0)
-//                .wins(0)
-//                .losses(0)
-//                .build();
-//
-//        userStatsRepository.save(stats);
-
-        log.info("New user[{}] and user stats successfully registered", request.getName());
+        log.info("New user[{}] successfully registered", request.getName());
         return "User registered successfully";
     }
 

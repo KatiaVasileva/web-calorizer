@@ -23,6 +23,6 @@ public class UserRegisterIn {
     String email;
 
     @NotBlank(message = "Необходимо указать пароль")
-    @Size(min = 8, max = 64)
+    @Size(min = 6, max = 64)
     String password;
 }

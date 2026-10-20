@@ -76,8 +76,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/*.html", "/*.js", "/*.css", "/static/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/food-list").permitAll()
-                        .requestMatchers("/auth/**", "/actuator/**", "/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/foods").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/actuator/**", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
