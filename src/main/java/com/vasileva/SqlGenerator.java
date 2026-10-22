@@ -236,8 +236,8 @@ public class SqlGenerator {
 
                     // Собираем полноценный SQL INSERT
                     String sql = String.format(
-                            "INSERT INTO foods (user_id, name, brand, food_category, calories, proteins, fats, carbohydrates, is_favorite, created_at, updated_at) " +
-                                    "VALUES (NULL, '%s', %s, '%s', %s, %s, %s, %s, false, '%s', NULL);",
+                            "INSERT INTO food (user_profile_id, name, brand, food_category, calories, proteins, fats, carbohydrates, is_favorite, created_at, updated_at) " +
+                                    "VALUES (1, '%s', %s, '%s', %s, %s, %s, %s, false, '%s', NULL);",
                             name, brandValue, category, calories, proteins, fats, carbohydrates, currentTime
                     );
 

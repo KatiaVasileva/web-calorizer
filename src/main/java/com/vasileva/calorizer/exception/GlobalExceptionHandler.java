@@ -16,6 +16,13 @@ public class GlobalExceptionHandler {
 
     public static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    @ExceptionHandler(UserProfileNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleUserProfileNotFoundException(UserProfileNotFoundException e) {
+        logger.error("User Profile not found exception: {}", e.getMessage());
+        return new ErrorResponse("Not Found", e.getMessage());
+    }
+
     @ExceptionHandler(FoodNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleFoodNotFoundException(FoodNotFoundException e) {

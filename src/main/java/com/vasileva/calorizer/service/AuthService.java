@@ -7,6 +7,8 @@ import com.vasileva.calorizer.model.auth.RefreshRequest;
 import com.vasileva.calorizer.model.auth.RegisterRequest;
 import com.vasileva.calorizer.model.user.Role;
 import com.vasileva.calorizer.model.user.User;
+import com.vasileva.calorizer.model.user.UserProfile;
+import com.vasileva.calorizer.repository.UserProfileRepository;
 import com.vasileva.calorizer.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import java.util.List;
 public class AuthService {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
+    private final UserProfileRepository userProfileRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
@@ -72,7 +75,13 @@ public class AuthService {
                 .role(Role.USER)
                 .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        UserProfile savedUserProfile = UserProfile.builder()
+                .user(savedUser)
+                .build();
+
+        userProfileRepository.save(savedUserProfile);
 
         log.debug("User [{}] successfully saved in database", request.getName());
 

@@ -39,16 +39,10 @@
                              referencedColumnNames="id"
                              deleteCascade="true"/>
             </column>
-            <column name="age" type="INT">
-                <constraints nullable="false"/>
-            </column>
+            <column name="age" type="INT"/>
             <column name="gender" type="VARCHAR(20)"/>
-            <column name="height" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="weight" type="DECIMAL(5,2)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="height" type="INT"/>
+            <column name="weight" type="DECIMAL(5,2)"/>
             <column name="activity_factor" type="VARCHAR(30)"/>
             <column name="created_at" type="timestamp"/>
             <column name="updated_at" type="timestamp"/>

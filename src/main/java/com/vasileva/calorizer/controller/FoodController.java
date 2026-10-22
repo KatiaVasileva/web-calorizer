@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,8 +50,9 @@ public class FoodController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FoodOut addFood(@RequestBody @Valid FoodIn input) {
-        return foodService.addFood(input);
+    public FoodOut addFood(@RequestBody @Valid FoodIn input, Authentication authentication) {
+        String username = authentication.getName();
+        return foodService.addFood(input, username);
     }
 
     @PutMapping("/{id}")

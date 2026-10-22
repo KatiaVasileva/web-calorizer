@@ -2,11 +2,14 @@ package com.vasileva.calorizer.service;
 
 import com.vasileva.calorizer.exception.FoodExistsException;
 import com.vasileva.calorizer.exception.FoodNotFoundException;
+import com.vasileva.calorizer.exception.UserProfileNotFoundException;
 import com.vasileva.calorizer.mapper.FoodMapper;
 import com.vasileva.calorizer.model.food.Food;
 import com.vasileva.calorizer.model.food.FoodIn;
 import com.vasileva.calorizer.model.food.FoodOut;
+import com.vasileva.calorizer.model.user.UserProfile;
 import com.vasileva.calorizer.repository.FoodRepository;
+import com.vasileva.calorizer.repository.UserProfileRepository;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 public class FoodService {
 
     public final FoodRepository foodRepository;
+    public final UserProfileRepository userProfileRepository;
     public final FoodMapper foodMapper;
     private final MeterRegistry meterRegistry;
 
@@ -44,13 +48,18 @@ public class FoodService {
     );
 
     @Transactional
-    public FoodOut addFood(FoodIn input) {
-        Food entity = foodRepository.save(foodMapper.in(input));
+    public FoodOut addFood(FoodIn input, String username) {
+        Food food = foodMapper.in(input);
+        UserProfile userProfile = userProfileRepository.findByUser_Name(username)
+                .orElseThrow(() -> new UserProfileNotFoundException(String.format(
+                        "User profile with name=%s not found", username)));
+        food.setUserProfile(userProfile);
+        Food savedFood = foodRepository.save(food);
         meterRegistry.counter("list.food.added",
                 "category", input.getFoodCategory().name(), // Разделит метрику по категориям
                 "status", "success"
         ).increment();
-        return foodMapper.out(entity);
+        return foodMapper.out(savedFood);
     }
 
     public List<FoodOut> getAllFoods() {
