@@ -19,7 +19,7 @@ public class FoodIn {
     @Size(min = 3, max = 125)
     String name;
 
-    @Size(min = 2, max = 125)
+    @Size(max = 125)
     String brand;
 
     FoodCategory foodCategory;
